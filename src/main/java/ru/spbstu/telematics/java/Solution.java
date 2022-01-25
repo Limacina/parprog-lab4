@@ -40,32 +40,33 @@ public class Solution {
     }
 
     public static void main(String[] arr) throws Exception {
-        int p = 10;
-        for (int n = 500; n < 1000; n+= 100) {
+        int p = 1;
+        for (int n = 2; n < 3; n++) {
             System.out.print("n = " + n + "\n");
             System.out.print("p = " + p + "\n");
             double[] X = new double[n];
             int t1 = 0, t2 = 0;
             double[][] mtx = createMatrix(n, p);
-            //printMatrix(mtx, n);
+            printMatrix(mtx, n);
             double[] vec = createVector(n);
-            //System.out.println("Vector:");
-            //printVector(vec, n);
+            System.out.println("Vector:");
+            printVector(vec, n);
             Instant begin_par = Instant.now();
             Parallel.solve(mtx, vec, n, p, X);
             Instant end_par = Instant.now();
             t1 += Duration.between(begin_par, end_par).toMillis();
-            //System.out.println("Solutions parallel:");
-            //printVector(X, n);
+            System.out.println("Solutions parallel:");
+            printVector(X, n);
             System.out.printf("Time parallel: %d milliseconds%n", t1);
             for (int i = 0; i < n; i++)
                 X[i] = 0;
+
             Instant begin_cons = Instant.now();
             Consequent.solve(mtx, vec, n, p, X);
             Instant end_cons = Instant.now();
             t2 += Duration.between(begin_cons, end_cons).toMillis();
-            //System.out.println("Solutions consequent:");
-            //printVector(X, n);
+            System.out.println("Solutions consequent:");
+            printVector(X, n);
             System.out.printf("Time consequent: %d milliseconds%n", t2);
             for (int i = 0; i < n; i++)
                 X[i] = 0;
